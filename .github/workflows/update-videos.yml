@@ -1,0 +1,38 @@
+name: Update videos from Drive
+
+on:
+  schedule:
+    - cron: "17 */6 * * *" # every 6 hours
+  workflow_dispatch: # "Run workflow" button on the Actions tab
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-videos
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Rebuild videos.js from the Drive folder
+        run: node scripts/update-videos.mjs
+
+      - name: Commit and push if the list changed
+        run: |
+          if git diff --quiet -- videos.js; then
+            echo "Video list is already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add videos.js
+          git commit -m "Update videos from Drive"
+          git push
