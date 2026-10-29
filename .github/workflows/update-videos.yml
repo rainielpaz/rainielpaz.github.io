@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "17 */6 * * *" # every 6 hours
   workflow_dispatch: # "Run workflow" button on the Actions tab
+  push:
+    branches: [main]
+    paths:
+      - scripts/update-videos.mjs
+      - .github/workflows/update-videos.yml
 
 permissions:
   contents: write
