@@ -1,7 +1,7 @@
 // Portfolio videos, pulled from Google Drive.
-// Each line is "<Drive file ID> | <file name>". To add a video, share it in Drive as
-// "Anyone with the link", copy the ID from its link (drive.google.com/file/d/<ID>/view)
-// and add a line to the right category. File extensions and "Copy of " are hidden on the site.
+// This file is rebuilt automatically from the Drive folder by scripts/update-videos.mjs
+// (see .github/workflows/update-videos.yml), so edits made here by hand get replaced.
+// To add a video, put it in one of the portfolio's Drive subfolders.
 window.PORTFOLIO = [
   {
     name: "DTC Ads",
