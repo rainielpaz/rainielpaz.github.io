@@ -7,15 +7,19 @@
 <meta name="description" content="Rainiel Paz, video editor. DTC ads, animation style ads, talking heads, AI avatar shorts and VSLs, edited in CapCut Pro.">
 <meta property="og:title" content="Rainiel Paz — Video Editor">
 <meta property="og:description" content="DTC ads, animation style ads, talking heads, AI avatar shorts and VSLs.">
+<meta property="og:image" content="https://rainielpaz.github.io/assets/og.jpg">
+<meta property="og:url" content="https://rainielpaz.github.io/">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#0b0c0a">
+<link rel="preload" as="image" href="assets/rainiel-paz.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230b0c0a'/%3E%3Ccircle cx='16' cy='16' r='7' fill='%23b3bf6c'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://drive.google.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@500;700;800;900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: the page reads like an edit bay. A program monitor up top, timeline rulers between
-   sections, and the work laid out as rolling film strips, one per category. */
+/* Layout: the page reads like an edit bay. A viewfinder-framed portrait up top, timeline
+   rulers between sections, and the work laid out as rolling film strips, one per category. */
 :root {
   --ink: #0b0c0a;
   --panel: #141612;
@@ -57,6 +61,11 @@ body {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 body.locked { overflow: hidden; }
+/* Fine film grain over the whole page */
+body::after {
+  content: ""; position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .07; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
 img { max-width: 100%; }
 a { color: inherit; }
 button { font: inherit; color: inherit; }
@@ -126,60 +135,68 @@ button { font: inherit; color: inherit; }
 .btn-ghost { background: transparent; color: var(--bone); box-shadow: inset 0 0 0 1px var(--line); }
 .btn-ghost:hover { background: var(--panel-2); }
 
-/* ---------- Hero ---------- */
-.hero { padding-block: clamp(40px, 7vw, 88px) clamp(56px, 8vw, 104px); }
-.hero-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+/* ---------- Hero: the portrait leads, the name sits over its edge ---------- */
+.hero { position: relative; isolation: isolate; overflow: hidden; }
+.hero::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  right: -20%; top: -25%; width: 90vw; max-width: 1100px; aspect-ratio: 1;
+  background: radial-gradient(closest-side, rgba(143,155,79,.17), rgba(143,155,79,.05) 55%, transparent 75%);
+}
+.hero-inner {
+  display: grid; grid-template-columns: minmax(0, 1fr); align-items: end;
+  padding-block: clamp(8px, 2vw, 24px) clamp(56px, 8vw, 112px);
+}
+.hero-copy { position: relative; z-index: 2; display: grid; gap: clamp(22px, 3vw, 34px); min-width: 0; margin-top: -34vw; }
+@media (min-width: 900px) {
+  .hero-inner { grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); min-height: min(88vh, 860px); }
+  .hero-copy { margin-top: 0; margin-right: -24%; padding-bottom: clamp(24px, 4vw, 56px); }
+}
+
+.eyebrow { display: flex; align-items: center; gap: 14px; }
+.eyebrow::before { content: ""; width: 36px; height: 1px; background: var(--olive); }
 .name {
-  font-family: var(--f-display); font-weight: 900; font-size: var(--step-3);
-  line-height: 0.82; letter-spacing: -0.005em; text-transform: uppercase; margin: 0;
+  font-family: var(--f-display); font-weight: 900; text-transform: uppercase; margin: 0;
+  font-size: clamp(4.4rem, 19vw, 11.5rem); line-height: 0.8; letter-spacing: -0.01em;
+  text-shadow: 0 6px 40px rgba(0,0,0,.45);
 }
-.name .cut { color: transparent; -webkit-text-stroke: 1.5px var(--gray); }
-.hero-grid {
-  display: grid; grid-template-columns: minmax(0, 1fr);
-  gap: clamp(28px, 4vw, 56px); margin-top: clamp(28px, 4vw, 48px); align-items: end;
-}
-@media (min-width: 900px) { .hero-grid { grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); } }
+@media (min-width: 900px) { .name { font-size: clamp(6rem, 11.5vw, 11.5rem); } }
+.name span { display: block; }
+.name .cut { color: transparent; -webkit-text-stroke: 1.5px var(--bone); text-shadow: none; opacity: .85; }
+.lead { margin: 0; font-size: clamp(1.15rem, 1.6vw, 1.4rem); line-height: 1.45; max-width: 32ch; color: var(--bone); text-wrap: pretty; }
+.lead em { font-style: normal; color: var(--olive-hi); }
 
-/* Program monitor: cycles through real portfolio frames */
-.monitor {
-  position: relative; display: block; width: 100%;
-  aspect-ratio: 16 / 9; max-width: 100%;
-  background: #050605; border: 1px solid var(--line);
-  overflow: hidden; cursor: pointer; padding: 0;
-}
-.mon-bg, .mon-fg { position: absolute; transition: opacity .8s ease; }
-.mon-bg { inset: -10%; width: 120%; height: 120%; object-fit: cover; filter: blur(28px) brightness(.45) saturate(.8); }
-.mon-fg { top: 0; bottom: 0; left: 50%; height: 100%; width: auto; aspect-ratio: 9 / 16; transform: translateX(-50%); object-fit: cover; box-shadow: 0 0 60px rgba(0,0,0,.6); }
-.monitor.swap .mon-bg, .monitor.swap .mon-fg { opacity: 0; }
-.monitor canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; mix-blend-mode: screen; opacity: .5; pointer-events: none; }
-.safe { position: absolute; border: 1px dashed rgba(228, 229, 222, 0.16); pointer-events: none; }
-.safe.action { inset: 5%; }
-.safe.title { inset: 10%; }
-.mon-tl, .mon-tr, .mon-bl, .mon-br { position: absolute; font-family: var(--f-mono); font-size: clamp(0.625rem, 1.4vw, 0.8125rem); letter-spacing: 0.08em; color: rgba(228, 229, 222, 0.8); text-shadow: 0 1px 6px rgba(0,0,0,.7); }
-.mon-tl { top: 3.2%; left: 2.6%; text-align: left; max-width: 34%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.mon-tr { top: 3.2%; right: 2.6%; color: var(--olive-hi); }
-.mon-bl { bottom: 3.2%; left: 2.6%; }
-.mon-br { bottom: 3.2%; right: 2.6%; font-variant-numeric: tabular-nums; color: var(--bone); }
-.mon-play {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) scale(.9);
-  width: 64px; height: 64px; border-radius: 50%; background: rgba(143,155,79,.92);
-  display: grid; place-items: center; opacity: 0; transition: opacity .25s, transform .25s;
-}
-.mon-play svg { width: 22px; height: 22px; margin-left: 3px; fill: var(--ink); }
-.monitor:hover .mon-play, .monitor:focus-visible .mon-play { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-.monitor-bar {
-  display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  border: 1px solid var(--line); border-top: 0; background: var(--panel); padding: 10px 14px;
-}
-
-.intro { display: grid; gap: 28px; }
-.intro p { margin: 0; font-size: var(--step-1); line-height: 1.45; max-width: 30ch; text-wrap: pretty; }
-.intro p em { font-style: normal; color: var(--olive-hi); }
-.meta { margin: 0; display: grid; border-top: 1px solid var(--line); }
-.meta div { display: flex; justify-content: space-between; gap: 16px; padding-block: 12px; border-bottom: 1px solid var(--line); }
-.meta dt { margin: 0; }
-.meta dd { margin: 0; text-align: right; font-size: 0.9375rem; font-variant-numeric: tabular-nums; }
+.stats { margin: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--line); max-width: 560px; }
+@media (min-width: 560px) { .stats { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.stats div { display: grid; gap: 4px; padding: 16px 16px 4px 0; align-content: start; min-width: 0; }
+.stats dt { order: 2; }
+.stats dd { margin: 0; font-family: var(--f-display); font-weight: 700; font-size: 1.85rem; line-height: 1; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.stats dd small { font-size: 1.15rem; }
 .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* Portrait, framed like a camera viewfinder and graded into the page */
+.portrait { position: relative; margin: 0; height: min(150vw, 720px); max-width: 100%; order: -1; }
+@media (min-width: 900px) { .portrait { height: min(88vh, 860px); order: 0; } }
+.portrait img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 50% 14%;
+  filter: contrast(1.06) saturate(.88) brightness(.97);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 9%, #000 52%, rgba(0,0,0,.6) 72%, transparent 96%), linear-gradient(90deg, transparent, #000 16%, #000 86%, transparent);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(180deg, transparent, #000 9%, #000 52%, rgba(0,0,0,.6) 72%, transparent 96%), linear-gradient(90deg, transparent, #000 16%, #000 86%, transparent);
+          mask-composite: intersect;
+}
+.vf { position: absolute; inset: 5% 11% 34% 11%; pointer-events: none; }
+.vf i { position: absolute; width: 26px; height: 26px; border: 0 solid var(--olive-hi); opacity: .9; }
+.vf i:nth-child(1) { top: 0; left: 0; border-top-width: 1.5px; border-left-width: 1.5px; }
+.vf i:nth-child(2) { top: 0; right: 0; border-top-width: 1.5px; border-right-width: 1.5px; }
+.vf i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+.vf i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+.vf span {
+  position: absolute; top: 12px; font-family: var(--f-mono); font-size: 0.6875rem; letter-spacing: 0.12em;
+  color: var(--bone); text-shadow: 0 1px 8px rgba(0,0,0,.8); font-variant-numeric: tabular-nums;
+}
+.vf .rec-l { left: 38px; color: var(--olive-hi); }
+.vf .tc-r { right: 38px; }
 
 /* ---------- Timeline ruler divider ---------- */
 .ruler {
@@ -429,43 +446,19 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
 </header>
 
 <main id="top">
-  <div class="hero wrap">
-    <div class="hero-head rise">
-      <span class="label"><b>Video Editor</b> &nbsp;/&nbsp; Portfolio</span>
-      <span class="label">BS Computer Engineering</span>
-    </div>
-    <h1 class="name rise d1">Rainiel<br><span class="cut">Paz</span></h1>
-
-    <div class="hero-grid">
-      <div class="rise d2">
-        <button type="button" class="monitor" id="monitor" aria-label="Play the video shown on the monitor">
-          <img class="mon-bg" id="mon-bg" alt="">
-          <img class="mon-fg" id="mon-fg" alt="">
-          <canvas id="grain" aria-hidden="true"></canvas>
-          <span class="safe action" aria-hidden="true"></span>
-          <span class="safe title" aria-hidden="true"></span>
-          <span class="mon-tl" id="mon-name">PROGRAM</span>
-          <span class="mon-tr">● REC 709</span>
-          <span class="mon-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 3.5v17l14-8.5z"/></svg></span>
-          <span class="mon-bl">9:16 · 1080×1920</span>
-          <span class="mon-br" id="tc">01:00:00:00</span>
-        </button>
-        <div class="monitor-bar">
-          <span class="label" id="mon-cat">Program</span>
-          <span class="label">Click to play</span>
-        </div>
-      </div>
-
-      <div class="intro rise d3">
-        <p>I cut footage into ads and stories that hold attention, <em>frame by frame</em>, from the first hook to the final fade.</p>
-        <dl class="meta">
-          <div><dt class="label">Name</dt><dd>Rainiel Paz</dd></div>
-          <div><dt class="label">Role</dt><dd>Video Editor</dd></div>
-          <div><dt class="label">Degree</dt><dd>BS in Computer Engineering</dd></div>
-          <div><dt class="label">Editing in</dt><dd>CapCut Pro</dd></div>
+  <div class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <span class="label eyebrow rise"><b>Video Editor</b>&nbsp;/&nbsp;Portfolio</span>
+        <h1 class="name rise d1"><span>Rainiel</span><span class="cut">Paz</span></h1>
+        <p class="lead rise d2">I cut footage into ads and stories that hold attention, <em>frame by frame</em>, from the first hook to the final fade.</p>
+        <dl class="stats rise d2">
           <div><dt class="label">Edits online</dt><dd id="meta-count">—</dd></div>
+          <div><dt class="label">Ad formats</dt><dd id="hero-cats">—</dd></div>
+          <div><dt class="label">Editing suite</dt><dd><small>CapCut Pro</small></dd></div>
+          <div><dt class="label">Degree</dt><dd><small>BS CpE</small></dd></div>
         </dl>
-        <div class="cta-row">
+        <div class="cta-row rise d3">
           <a class="btn" href="#work">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2.5v11l9-5.5z" fill="currentColor"/></svg>
             Watch my edits
@@ -473,6 +466,15 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
           <a class="btn btn-ghost" href="#contact">Get in touch</a>
         </div>
       </div>
+
+      <figure class="portrait">
+        <img src="assets/rainiel-paz.jpg" width="837" height="1500" alt="Portrait of Rainiel Paz" fetchpriority="high" decoding="async">
+        <div class="vf" aria-hidden="true">
+          <i></i><i></i><i></i><i></i>
+          <span class="rec-l">● REC</span>
+          <span class="tc-r" id="tc">01:00:00:00</span>
+        </div>
+      </figure>
     </div>
   </div>
 
@@ -658,7 +660,8 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
   var total = cats.reduce(function (n, c) { return n + c.videos.length; }, 0);
   $('t-videos').textContent = total;
   $('t-cats').textContent = cats.length;
-  $('meta-count').textContent = total + ' videos';
+  $('meta-count').textContent = total;
+  $('hero-cats').textContent = cats.length;
 
   function thumb(id, w) { return 'https://drive.google.com/thumbnail?id=' + id + '&sz=w' + (w || 400); }
   function thumbFallback(img, id, w) {
@@ -802,32 +805,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     }
   });
 
-  // ---------- Hero monitor: cycles real frames from the portfolio ----------
-  var all = [];
-  cats.forEach(function (c, ci) { c.videos.forEach(function (v, vi) { all.push({ ci: ci, vi: vi, v: v }); }); });
-  var mon = $('monitor'), monPick = null;
-  function showFrame() {
-    if (!all.length) return;
-    var p = all[Math.floor(Math.random() * all.length)];
-    var pre = new Image();
-    pre.referrerPolicy = 'no-referrer';
-    pre.onload = function () {
-      mon.classList.add('swap');
-      setTimeout(function () {
-        $('mon-bg').src = pre.src;
-        $('mon-fg').src = pre.src;
-        $('mon-name').textContent = p.v.title.toUpperCase();
-        $('mon-cat').textContent = p.v.cat;
-        monPick = p;
-        mon.classList.remove('swap');
-      }, reduce ? 0 : 450);
-    };
-    pre.src = thumb(p.v.id, 640);
-  }
-  showFrame();
-  if (!reduce) setInterval(function () { if (player.hidden && !mon.matches(':hover')) showFrame(); }, 4200);
-  mon.addEventListener('click', function () { if (monPick) openPlayer(monPick.ci, monPick.vi); });
-
   // ---------- Rulers ----------
   function fillRuler(el, offset) {
     if (!el) return;
@@ -850,26 +827,6 @@ footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wr
     requestAnimationFrame(tick);
   }
   if (!reduce) requestAnimationFrame(tick);
-
-  // ---------- Film grain over the monitor ----------
-  var c = $('grain'), ctx = c.getContext('2d'), W = 0, H = 0, noise = null;
-  function size() {
-    var r = c.getBoundingClientRect();
-    W = c.width = Math.max(1, Math.round(r.width / 3));
-    H = c.height = Math.max(1, Math.round(r.height / 3));
-    noise = ctx.createImageData(W, H);
-  }
-  function grain() {
-    var d = noise.data;
-    for (var i = 0; i < d.length; i += 4) { var v = Math.random() * 255; d[i] = d[i + 1] = d[i + 2] = v; d[i + 3] = 40; }
-    ctx.putImageData(noise, 0, 0);
-  }
-  size(); grain();
-  window.addEventListener('resize', function () { size(); grain(); });
-  if (!reduce) {
-    var last = 0;
-    (function loop(now) { if (now - last > 80) { grain(); last = now; } requestAnimationFrame(loop); })(0);
-  }
 
   // ---------- Copy buttons ----------
   Array.prototype.forEach.call(document.querySelectorAll('.btn-copy'), function (btn) {
